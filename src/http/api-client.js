@@ -1,4 +1,4 @@
-var config = require("../config.json");
+var config = require('../config.json');
 
 export const ApiClient = {
   get: async (url) => {
@@ -6,5 +6,5 @@ export const ApiClient = {
     const data = await response.json();
     config.todos = data.results;
     return data;
-  }
+  },
 };

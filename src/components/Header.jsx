@@ -1,5 +1,5 @@
-import React from "react";
-import "./Header.css";
+import React from 'react';
+import './Header.css';
 
 export const Header = ({
   todos,
@@ -7,7 +7,7 @@ export const Header = ({
   config,
   onToggleAll,
   sortValue,
-  onSortChange
+  onSortChange,
 }) => {
   const completedTodosCount = todos.filter((todo) => todo.completed).length;
   const areAllTodosCompleted = completedTodosCount === data?.length;

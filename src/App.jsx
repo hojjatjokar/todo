@@ -1,14 +1,14 @@
 import React from 'react';
-import { useGetTodos } from "./http";
-import { Header, Todo } from "./components";
+import { useGetTodos } from './http';
+import { Header, Todo } from './components';
 import './App.css';
-var config = require("./config.json");
+var config = require('./config.json');
 
 const getSortingStrategy = ({ sortValue }) => {
   switch (sortValue) {
-    case "title":
+    case 'title':
       return (todos) => todos.sort((a, b) => a.title.localeCompare(b.title));
-    case "completed":
+    case 'completed':
       return (todos) => todos.sort((a, b) => a.completed - b.completed);
     default:
       return (todos) => todos.sort((a, b) => a.id - b.id);
@@ -18,14 +18,13 @@ const getSortingStrategy = ({ sortValue }) => {
 function App() {
   const { data, error, isLoading } = useGetTodos();
   const [todos, setTodos] = React.useState([]);
-  const [sortValue, setSortValue] = React.useState("");
+  const [sortValue, setSortValue] = React.useState('');
 
   React.useEffect(() => {
     if (!data) return;
 
     setTodos(data.results);
   }, [data]);
-
 
   const sortedTodos = React.useMemo(() => {
     return getSortingStrategy({ sortValue })(todos);
@@ -41,7 +40,7 @@ function App() {
 
   return (
     <div className="app">
-       <Header
+      <Header
         todos={todos}
         data={data}
         config={config}
@@ -51,14 +50,14 @@ function App() {
           setTodos(
             todos.map((todo) => ({
               ...todo,
-              completed: !areAllTodosCompleted
+              completed: !areAllTodosCompleted,
             }))
           );
         }}
       />
 
       <div className="grid">
-      {sortedTodos.map((todo, idx) => (
+        {sortedTodos.map((todo, idx) => (
           <Todo
             key={todo.login.uuid}
             todo={todo}
@@ -74,7 +73,6 @@ function App() {
           />
         ))}
       </div>
-      
     </div>
   );
 }

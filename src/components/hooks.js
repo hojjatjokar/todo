@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-export const useIntersectionObserver = (options = { rootMargin: "120px" }) => {
+export const useIntersectionObserver = (options = { rootMargin: '120px' }) => {
   const ref = React.useRef(null);
   const [isIntersected, setIsIntersected] = React.useState(false);
 

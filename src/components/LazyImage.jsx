@@ -1,14 +1,14 @@
-import React from "react";
-import "./LazyImage.css";
-import { useIntersectionObserver } from "./hooks";
+import React from 'react';
+import './LazyImage.css';
+import { useIntersectionObserver } from './hooks';
 
 /*
  * Image needs a ratio of 1:1 to fit the SVG placeholder.
  * This could be made configurable.
  */
-export const LazyImage = ({ src, alt, color = "#F3F5F7" }) => {
+export const LazyImage = ({ src, alt, color = '#F3F5F7' }) => {
   const { intersectionRef, isIntersected } = useIntersectionObserver();
-  const url = isIntersected ? src : "";
+  const url = isIntersected ? src : '';
 
   return (
     <div className="lazy-image">

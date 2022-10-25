@@ -1,13 +1,13 @@
-import React, { useMemo } from "react";
-import { LazyImage } from ".";
-import "./Todo.css";
+import React, { useMemo } from 'react';
+import { LazyImage } from '.';
+import './Todo.css';
 
 export const Todo = ({ todo, onChange, config, isCompleted }) => {
   const [showModal, setShownModal] = React.useState(false);
   const [completed, setCompleted] = React.useState(false);
   const showHideClassName = showModal
-    ? "modal display-block"
-    : "modal display-none";
+    ? 'modal display-block'
+    : 'modal display-none';
 
   const handleModal = () => {
     setShownModal(!showModal);
@@ -44,7 +44,7 @@ export const Todo = ({ todo, onChange, config, isCompleted }) => {
         }
         return formattedNames;
       } else {
-        return "No name";
+        return 'No name';
       }
     } else if (Array.isArray(names)) {
       if (names.name != undefined && names.name != null) {
@@ -60,7 +60,7 @@ export const Todo = ({ todo, onChange, config, isCompleted }) => {
           }
         }
       } else {
-        return "No name";
+        return 'No name';
       }
     }
   };
@@ -77,7 +77,7 @@ export const Todo = ({ todo, onChange, config, isCompleted }) => {
 
     return (
       <>
-        Address: {myStreetName + " " + myStreetNumber}
+        Address: {myStreetName + ' ' + myStreetNumber}
         <br></br>
         <br></br>
         Postcode: {myPostcode}
@@ -100,7 +100,7 @@ export const Todo = ({ todo, onChange, config, isCompleted }) => {
       <div className="todo_location">{userLocation}</div>
 
       <span>
-        Completed:{" "}
+        Completed:{' '}
         <input
           type="checkbox"
           checked={completed}

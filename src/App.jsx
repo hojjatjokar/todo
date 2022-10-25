@@ -1,6 +1,9 @@
+import { useGetTodos } from "./http";
 import './App.css';
 
 function App() {
+  const { data, error, isLoading } = useGetTodos();
+
   return (
     <div className="app">
       Header

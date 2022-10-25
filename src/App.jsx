@@ -1,6 +1,6 @@
 import React from 'react';
 import { useGetTodos } from "./http";
-import { Header } from "./components";
+import { Header, Todo } from "./components";
 import './App.css';
 var config = require("./config.json");
 
@@ -65,7 +65,21 @@ function App() {
       />
 
       <div className="grid">
-        sortedTodos
+      {sortedTodos.map((todo, idx) => (
+          <Todo
+            key={todo.login.uuid}
+            todo={todo}
+            config={config}
+            isCompleted={todo.completed}
+            onChange={() => {
+              setTodos((curr) => {
+                return curr.map((item, i) =>
+                  i === idx ? { ...item, completed: !item.completed } : item
+                );
+              });
+            }}
+          />
+        ))}
       </div>
       
     </div>

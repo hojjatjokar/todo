@@ -17,17 +17,10 @@ const getSortingStrategy = ({ sortValue }) => {
 
 function App() {
   const { data, error, isLoading } = useGetTodos();
-  // first we set this from data
-  // if toggle all input checked/uncheck we call this again to set completed property for all fields
   const [todos, setTodos] = React.useState([]);
-  // value for "sort by" dropdown
   const [sortValue, setSortValue] = React.useState("");
 
   React.useEffect(() => {
-    // why reurn when there is no data? 
-    // why not if(data) setTodos(data.results);
-    // @TODO: refactor to my opproach
-
     if (!data) return;
 
     setTodos(data.results);

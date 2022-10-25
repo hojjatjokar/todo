@@ -1,12 +1,68 @@
+import React from 'react';
 import { useGetTodos } from "./http";
+import { Header } from "./components";
 import './App.css';
+var config = require("./config.json");
+
+const getSortingStrategy = ({ sortValue }) => {
+  switch (sortValue) {
+    case "title":
+      return (todos) => todos.sort((a, b) => a.title.localeCompare(b.title));
+    case "completed":
+      return (todos) => todos.sort((a, b) => a.completed - b.completed);
+    default:
+      return (todos) => todos.sort((a, b) => a.id - b.id);
+  }
+};
 
 function App() {
   const { data, error, isLoading } = useGetTodos();
+  // first we set this from data
+  // if toggle all input checked/uncheck we call this again to set completed property for all fields
+  const [todos, setTodos] = React.useState([]);
+  // value for "sort by" dropdown
+  const [sortValue, setSortValue] = React.useState("");
+
+  React.useEffect(() => {
+    // why reurn when there is no data? 
+    // why not if(data) setTodos(data.results);
+    // @TODO: refactor to my opproach
+
+    if (!data) return;
+
+    setTodos(data.results);
+  }, [data]);
+
+
+  const sortedTodos = React.useMemo(() => {
+    return getSortingStrategy({ sortValue })(todos);
+  }, [todos, sortValue]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error</div>;
+  }
 
   return (
     <div className="app">
-      Header
+       <Header
+        todos={todos}
+        data={data}
+        config={config}
+        sortValue={sortValue}
+        onSortChange={setSortValue}
+        onToggleAll={(areAllTodosCompleted) => {
+          setTodos(
+            todos.map((todo) => ({
+              ...todo,
+              completed: !areAllTodosCompleted
+            }))
+          );
+        }}
+      />
 
       <div className="grid">
         sortedTodos

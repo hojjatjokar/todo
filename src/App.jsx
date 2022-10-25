@@ -1,19 +1,9 @@
 import React from 'react';
 import { useGetTodos } from './http';
 import { Header, Todo } from './components';
+import getSortingStrategy from './utils/getSortingStrategy';
+import config from './config.json';
 import './App.css';
-var config = require('./config.json');
-
-const getSortingStrategy = ({ sortValue }) => {
-  switch (sortValue) {
-    case 'title':
-      return (todos) => todos.sort((a, b) => a.title.localeCompare(b.title));
-    case 'completed':
-      return (todos) => todos.sort((a, b) => a.completed - b.completed);
-    default:
-      return (todos) => todos.sort((a, b) => a.id - b.id);
-  }
-};
 
 function App() {
   const { data, error, isLoading } = useGetTodos();

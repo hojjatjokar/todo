@@ -1,4 +1,4 @@
-var config = require('../config.json');
+import config from '../config.json';
 
 export const ApiClient = {
   get: async (url) => {

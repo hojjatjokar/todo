@@ -1,14 +1,14 @@
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { ApiClient } from './api-client';
 
 export const useGetTodos = () => {
-  const query = useQuery(
+  return useInfiniteQuery(
     ['todos'],
-    () => {
-      return ApiClient.get('https://randomuser.me/api/?results=40');
+    ({ pageParam = 0 }) => {
+      return ApiClient.get(
+        'https://randomuser.me/api/?results=40&page=' + pageParam
+      );
     },
-    { refetchOnWindowFocus: false }
+    { getNextPageParam: (lastPage) => lastPage++ }
   );
-
-  return query;
 };

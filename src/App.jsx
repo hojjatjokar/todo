@@ -1,26 +1,33 @@
 import React from 'react';
 import { useGetTodos } from './http';
-import { Header, Todo } from './components';
+import { Header, Todo, LoadMore } from './components';
 import getSortingStrategy from './utils/getSortingStrategy';
 import config from './config.json';
 import './App.css';
 
 function App() {
-  const { data, error, isLoading } = useGetTodos();
+  const { data, error, fetchNextPage, isFetching, isFetchingNextPage, status } =
+    useGetTodos();
   const [todos, setTodos] = React.useState([]);
   const [sortValue, setSortValue] = React.useState('');
 
   React.useEffect(() => {
     if (!data) return;
+    // This will flatten the data to be in a single array
+    // data.pages[{results:[]},{results:[]},{results:[]}] => []
+    const newTodoList = data.pages.reduce((finalData, currPage) => {
+      finalData.push(...currPage.results);
+      return finalData;
+    }, []);
 
-    setTodos(data.results);
+    setTodos(newTodoList);
   }, [data]);
 
   const sortedTodos = React.useMemo(() => {
     return getSortingStrategy({ sortValue })(todos);
   }, [todos, sortValue]);
 
-  if (isLoading) {
+  if (status === 'loading') {
     return <div>Loading...</div>;
   }
 
@@ -63,6 +70,11 @@ function App() {
           />
         ))}
       </div>
+      <LoadMore
+        fetchNextPage={fetchNextPage}
+        isFetchingNextPage={isFetchingNextPage}
+        isFetching={isFetching}
+      />
     </div>
   );
 }

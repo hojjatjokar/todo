@@ -55,6 +55,7 @@
 
 .display-block {
   display: block;
+  z-index: 1;
 }
 
 .display-none {

@@ -10,8 +10,10 @@ export const Todo = ({ todo, onChange, config, isCompleted }) => {
     ? 'modal display-block'
     : 'modal display-none';
 
-  const handleModal = () => {
-    setShownModal(!showModal);
+  const handleModal = (e) => {
+    if (e.target.tagName !== 'INPUT') {
+      setShownModal(!showModal);
+    }
   };
 
   const closeModal = () => {
@@ -21,12 +23,6 @@ export const Todo = ({ todo, onChange, config, isCompleted }) => {
   React.useEffect(() => {
     setCompleted(isCompleted);
   }, [isCompleted]);
-
-  React.useEffect(() => {
-    if (config.sorted) {
-      setShownModal(true);
-    }
-  }, [config.sorted]);
 
   const userName = useMemo(() => getNames(todo), [todo]);
 
